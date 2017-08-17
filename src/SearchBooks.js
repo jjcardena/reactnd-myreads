@@ -20,7 +20,8 @@ class SearchBooks extends Component {
   updateQuery = (query) => {
     this.setState({ query: query });
     clearTimeout(this.timer);
-    this.timer = window.setTimeout(() => this.props.onSearch(query),1000);
+    if(query.trim()!=='')
+      this.timer = window.setTimeout(() => this.props.onSearch(query),500);
   };
 
   render () {
@@ -51,7 +52,7 @@ class SearchBooks extends Component {
           <ol className="books-grid">
             {booksResult.map((book) =>
               <li key={book.id}>
-                <Book book={book} shelfOptions={this.props.shelfs}
+                <Book book={book} shelfOptions={this.props.shelfOptions}
                 onBookShelfUpdate={this.props.onBookShelfUpdate}/>
               </li>
             )}

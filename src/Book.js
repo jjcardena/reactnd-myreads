@@ -7,9 +7,9 @@ class Book extends Component {
   state = {
     shelfValue: ''
   };
-  
+
   componentDidMount() {
-    this.setState( {shelfValue : this.props.book.shelf} );
+    this.setState( {shelfValue : (this.props.book.shelf || 'none')} );
   };
 
   statusChange = (newShelf) => {

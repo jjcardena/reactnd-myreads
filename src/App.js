@@ -34,14 +34,22 @@ class App extends React.Component {
     if (!maxResults) maxResults = 10;
     if (query.trim());
     BooksAPI.search(query, maxResults).then((search) => {
-        this.setState({ search });
+        this.setState((state) => ({
+          search: search.map((searchbook) => {
+            state.books.forEach((shelfbook) => {
+              if(shelfbook.id===searchbook.id)
+                searchbook = shelfbook;
+            })
+            return searchbook;
+          })
+        }));
     });
   }
   render() {
     return (
       <div className="app">
         <Route path="/search" render={() => (
-          <SearchBooks shelfs={this.state.shelfs}
+          <SearchBooks shelfOptions={this.state.shelfs}
           books={this.state.search}
           onSearch={this.searchBooks}
           onBookShelfUpdate={this.bookShelfUpdate}/>
