@@ -48,15 +48,15 @@ class App extends React.Component {
   render() {
     return (
       <div className="app">
+        <Route exact path="/" render={() => (
+          <ListBooks shelfs={this.state.shelfs}
+          books={this.state.books}
+          onBookShelfUpdate={this.bookShelfUpdate}/>
+        )}/>
         <Route path="/search" render={() => (
           <SearchBooks shelfOptions={this.state.shelfs}
           books={this.state.search}
           onSearch={this.searchBooks}
-          onBookShelfUpdate={this.bookShelfUpdate}/>
-        )}/>
-        <Route exact path="/" render={() => (
-          <ListBooks shelfs={this.state.shelfs}
-          books={this.state.books}
           onBookShelfUpdate={this.bookShelfUpdate}/>
         )}/>
       </div>
