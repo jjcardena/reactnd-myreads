@@ -31,18 +31,31 @@ class App extends React.Component {
     });
   }
   searchBooks = (query, maxResults) => {
+    /*
+      NOTES: The search from BooksAPI is limited to a particular set of search terms.
+      You can find these search terms here:
+      https://github.com/udacity/reactnd-project-myreads-starter/blob/master/SEARCH_TERMS.md
+
+      However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
+      you don't find a specific author or title. Every search is limited by search terms.
+    */
     if (!maxResults) maxResults = 10;
     if (query.trim());
     BooksAPI.search(query, maxResults).then((search) => {
-        this.setState((state) => ({
-          search: search.map((searchbook) => {
-            state.books.forEach((shelfbook) => {
-              if(shelfbook.id===searchbook.id)
-                searchbook = shelfbook;
+        if (search.error){
+          this.setState({search: []});
+        }
+        else {
+          this.setState((state) => ({
+            search: search.map((searchbook) => {
+              state.books.forEach((shelfbook) => {
+                if(shelfbook.id===searchbook.id)
+                  searchbook = shelfbook;
+              })
+              return searchbook;
             })
-            return searchbook;
-          })
-        }));
+          }));
+        }
     });
   }
   render() {
